@@ -2,9 +2,35 @@
 <html>
 	<head>
 		<title></title>
+		<style type="text/css" media="screen">
+
+		</style>
 	</head>
 	<body>
 		<h1>Hello, {{curr_user.user_name}}!</h1>
+		<h3>You have been poked by {{curr_user.pokee.count }} user{{curr_user.pokee.count|pluralize}}</h3>
 		<p><a href="{% url 'logout' %}">Log out</a></p>
+		{% for poke in curr_user.pokee.all %}
+			<p>{{poke.poker.user_name}} poked you {{poke.count}} time{{poke.count|pluralize}}</p>
+		{% endfor %}
+
+		<table>
+			<thead>
+				<tr>
+					<th>User Name</th>
+					<th>Poke History</th>
+					<th>Poke</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+				<tr>
+					<td>{{user.user_name}}</td>
+					<td>{{user.total_count}}</td>
+					<td><a href="{% url 'create_poke' user.id %}">POKE!</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</body>
 </html>
